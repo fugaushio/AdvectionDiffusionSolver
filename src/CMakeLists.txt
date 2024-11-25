@@ -1,0 +1,5 @@
+add_subdirectory(lib)
+add_subdirectory(Analysis)
+add_subdirectory(Explicit)
+add_subdirectory(Implicit)
+add_subdirectory(DG)
