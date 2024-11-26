@@ -45,9 +45,10 @@ void FEMF::initialize(string &filename)
     gaussweight = 1.;
     detJ = dx / 2.;
 
-    for (int i = 0; i <= nx; i++)
+    u_b(0) = amplitude;
+    for (int i = 1; i <= nx; i++)
     {
-        u_b(i) = amplitude * sin(2. * M_PI * x);
+        u_b(i) = 0.;
         x += dx;
     }
 }
@@ -159,7 +160,7 @@ void FEMF::setBC(MatrixXd &A, VectorXd &b, int flag)
             // A(n, i) = 0.;
         }
         A(0, 0) = 1.;
-        A(0, n) = -1.;
+        // A(0, n) = -1.;
 
         b(0) = 0.;
         // b(n) = 0.;
@@ -170,14 +171,12 @@ void FEMF::setBC(MatrixXd &A, VectorXd &b, int flag)
         for (int i = 0; i < n + 1; i++)
         {
             A(0, i) = 0.;
-            A(n, i) = 0.;
+            // A(n, i) = 0.;
         }
         A(0, 0) = 1.;
-        A(0, 1) = -1.;
-        A(n, n) = 1.;
-        A(n, n - 1) = -1.;
+        // A(0, n) = -1.;
 
-        b(0) = 0.;
-        b(n) = 0.;
+        b(0) = amplitude;
+        // b(n) = 0.;
     }
 }

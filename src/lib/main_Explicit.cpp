@@ -29,7 +29,7 @@ void FEMF::main_Explicit()
     }
 
     R = RHS * u_b;
-    setBC(LHS, R, 0);
+    setBC(LHS, R, 1);
     u[0] = LHS.colPivHouseholderQr().solve(R);
     // solveLinearSystem(u, LHS, R);
 }

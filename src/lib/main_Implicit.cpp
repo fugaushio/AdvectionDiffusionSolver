@@ -6,6 +6,7 @@ using namespace Eigen;
 
 void FEMF::main_Implicit()
 {
+    u[0] = u_b;
     do
     {
         LHS = Eigen::MatrixXd::Zero(nx + 1, nx + 1);

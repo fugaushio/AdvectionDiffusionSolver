@@ -113,7 +113,7 @@ void FEMF::main_DG()
                 if (j != i)
                 {
                     dQdu[i][j](0, 0) = 0.;
-                    dQdu[i][j](0, nx) = 0.;
+                    // dQdu[i][j](0, nx) = 0.;
                 }
             }
         }

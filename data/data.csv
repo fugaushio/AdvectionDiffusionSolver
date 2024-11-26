@@ -1,2 +1,2 @@
 dx,L,dt,T,U0,kappa,c,tolerance,num_node_s,num_node_t,alpha
-1e-2,1,1e-2,1,1,1e-1,0.2,1e-15,2,2,5e-1
+1e-2,1,1e-2,1,1,1e-1,2e-1,1e-15,2,2,5e-1
