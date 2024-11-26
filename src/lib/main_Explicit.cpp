@@ -21,6 +21,7 @@ void FEMF::main_Explicit()
                     LHS(i + p, i + q) += N(p, gausspoint(j)) * N(q, gausspoint(j)) * gaussweight * detJ / dt;
                     LHS(i + p, i + q) += kappa * alpha * dNdx(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                     RHS(i + p, i + q) += N(p, gausspoint(j)) * N(q, gausspoint(j)) * gaussweight * detJ / dt;
+                    LHS(i + p, i + q) -= c * N(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                     RHS(i + p, i + q) -= kappa * (1. - alpha) * dNdx(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                 }
             }
@@ -28,7 +29,7 @@ void FEMF::main_Explicit()
     }
 
     R = RHS * u_b;
-    setBC(LHS, R, BCtype);
+    setBC(LHS, R, 0);
     u[0] = LHS.colPivHouseholderQr().solve(R);
     // solveLinearSystem(u, LHS, R);
 }

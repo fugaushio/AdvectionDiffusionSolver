@@ -73,6 +73,7 @@ void FEMF::main_DG()
                         {
 
                             Q[k](i + p) += TdTdt[k][l] * N(p, gausspoint(j)) * vel[l][j] * gaussweight * detJ;
+                            Q[k](i + p) += c * TT[k][l] * N(p, gausspoint(j)) * dvdx[l][j] * gaussweight * detJ;
                             Q[k](i + p) += kappa * TT[k][l] * dNdx(p, gausspoint(j)) * dvdx[l][j] * gaussweight * detJ;
                         }
                     }
@@ -91,6 +92,7 @@ void FEMF::main_DG()
                             for (int l = 0; l < num_node_t; l++)
                             {
                                 dQdu[k][l](i + p, i + q) += TdTdt[k][l] * N(p, gausspoint(j)) * N(q, gausspoint(j)) * gaussweight * detJ;
+                                dQdu[k][l](i + p, i + q) += c * TT[k][l] * N(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                                 dQdu[k][l](i + p, i + q) += kappa * TT[k][l] * dNdx(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                             }
                         }
@@ -107,11 +109,11 @@ void FEMF::main_DG()
         {
             for (int j = 0; j < num_node_t; j++)
             {
-                setBC(dQdu[i][j], Q[i], BCtype);
+                setBC(dQdu[i][j], Q[i], 0);
                 if (j != i)
                 {
                     dQdu[i][j](0, 0) = 0.;
-                    dQdu[i][j](nx, nx) = 0.;
+                    dQdu[i][j](0, nx) = 0.;
                 }
             }
         }
@@ -138,7 +140,7 @@ void FEMF::main_DG()
                 u[k](i) += delta_u(i + k * (nx + 1));
             }
         }
-        //std::cout << "Norm:" << delta_u.norm() << endl;
+        // std::cout << "Norm:" << delta_u.norm() << endl;
         if (delta_u.norm() > 1e1)
         {
             exit(1);

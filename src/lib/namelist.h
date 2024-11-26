@@ -74,7 +74,7 @@ public:
     double c;
     double alpha;
     double amplitude;
-    int BCtype;
+    // int BCtype;
     double tolerance;
     string outputDir;
     string fileName;

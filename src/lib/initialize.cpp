@@ -47,19 +47,7 @@ void FEMF::initialize(string &filename)
 
     for (int i = 0; i <= nx; i++)
     {
-        if (BCtype == 0)
-        {
-            u_b(i) = amplitude * exp(-pow((x - length / 2.), 2) / 4. / kappa);
-        }
-        else if (BCtype == 1)
-        {
-            u_b(i) = amplitude * cos(2. * M_PI * x / length);
-        }
-        else
-        {
-            std::cout << "BCtype Error" << std::endl;
-            break;
-        }
+        u_b(i) = amplitude * sin(2. * M_PI * x);
         x += dx;
     }
 }
@@ -73,17 +61,17 @@ void FEMF::inputDomainInfo()
 }
 void FEMF::inputBoundaryInfo()
 {
-    BCtype = static_cast<int>(parameter(0, 4));
-    amplitude = parameter(0, 5);
+    // BCtype = static_cast<int>(parameter(0, 4));
+    amplitude = parameter(0, 4);
 }
 void FEMF::inputsolverInfo()
 {
-    kappa = parameter(0, 6);
-    c = parameter(0, 7);
-    tolerance = parameter(0, 8);
-    num_node_s = parameter(0, 9);
-    num_node_t = parameter(0, 10);
-    alpha = parameter(0, 11);
+    kappa = parameter(0, 5);
+    c = parameter(0, 6);
+    tolerance = parameter(0, 7);
+    num_node_s = parameter(0, 8);
+    num_node_t = parameter(0, 9);
+    alpha = parameter(0, 10);
 }
 
 void FEMF::integral_T()
@@ -168,13 +156,13 @@ void FEMF::setBC(MatrixXd &A, VectorXd &b, int flag)
         for (int i = 0; i < n + 1; i++)
         {
             A(0, i) = 0.;
-            A(n, i) = 0.;
+            // A(n, i) = 0.;
         }
         A(0, 0) = 1.;
-        A(n, n) = 1.;
+        A(0, n) = -1.;
 
         b(0) = 0.;
-        b(n) = 0.;
+        // b(n) = 0.;
     }
 
     if (flag == 1)

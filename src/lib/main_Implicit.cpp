@@ -4,7 +4,6 @@
 
 using namespace Eigen;
 
-
 void FEMF::main_Implicit()
 {
     do
@@ -43,6 +42,7 @@ void FEMF::main_Implicit()
                 for (int j = 0; j < 2; j++)
                 {
                     R(i + p) -= N(p, gausspoint(j)) * (vel[j] - vel_b[j]) * gaussweight * detJ / dt;
+                    R(i + p) -= c * N(p, gausspoint(j)) * dvdx[j] * gaussweight * detJ;
                     R(i + p) -= kappa * dNdx(p, gausspoint(j)) * dvdx[j] * gaussweight * detJ;
                 }
             }
@@ -54,6 +54,7 @@ void FEMF::main_Implicit()
                     for (int j = 0; j < 2; j++)
                     {
                         LHS(i + p, i + q) += N(p, gausspoint(j)) * N(q, gausspoint(j)) * gaussweight * detJ / dt;
+                        LHS(i + p, i + q) += c * N(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                         LHS(i + p, i + q) += kappa * dNdx(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                     }
                 }
@@ -64,7 +65,7 @@ void FEMF::main_Implicit()
             // tau = 1 / sqrt(tau);
         }
 
-        setBC(LHS, R, BCtype);
+        setBC(LHS, R, 0);
         delta_u = LHS.colPivHouseholderQr().solve(R);
         // solveLinearSystem(delta_u, LHS, R);
         u[0] += delta_u;
