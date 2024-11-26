@@ -71,6 +71,7 @@ public:
     int num_node_t;
 
     double kappa;
+    double c;
     double alpha;
     double amplitude;
     int BCtype;

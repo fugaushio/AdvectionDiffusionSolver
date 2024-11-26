@@ -49,7 +49,7 @@ void FEMF::initialize(string &filename)
     {
         if (BCtype == 0)
         {
-            u_b(i) = amplitude * sin(2. * M_PI * x / length);
+            u_b(i) = amplitude * exp(-pow((x - length / 2.), 2) / 4. / kappa);
         }
         else if (BCtype == 1)
         {
@@ -79,10 +79,11 @@ void FEMF::inputBoundaryInfo()
 void FEMF::inputsolverInfo()
 {
     kappa = parameter(0, 6);
-    tolerance = parameter(0, 7);
-    num_node_s = parameter(0, 8);
-    num_node_t = parameter(0, 9);
-    alpha = parameter(0, 10);
+    c = parameter(0, 7);
+    tolerance = parameter(0, 8);
+    num_node_s = parameter(0, 9);
+    num_node_t = parameter(0, 10);
+    alpha = parameter(0, 11);
 }
 
 void FEMF::integral_T()

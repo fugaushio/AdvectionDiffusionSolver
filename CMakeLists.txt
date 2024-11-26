@@ -43,7 +43,7 @@ if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 endif("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 
 #change default install prefix
-set(INSTALL_DIR "/root/c++/DiffusionSolver")
+set(INSTALL_DIR "/root/c++/AdvectionDiffusionSolver")
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR} CACHE PATH "..." FORCE)
 endif()

@@ -6,7 +6,7 @@ endif()
 
 string(REPLACE " " ";" compile_options_tmp ${compile_options_tmp})
 
-set(main_target "DG")
+set(main_target "DG_AD")
 
 add_executable(${main_target} ${main_src})
 target_sources(${main_target}
