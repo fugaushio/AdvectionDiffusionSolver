@@ -19,9 +19,10 @@ void FEMF::main_Explicit()
                 for (int j = 0; j < 2; j++)
                 {
                     LHS(i + p, i + q) += N(p, gausspoint(j)) * N(q, gausspoint(j)) * gaussweight * detJ / dt;
+                    LHS(i + p, i + q) += c * alpha * N(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                     LHS(i + p, i + q) += kappa * alpha * dNdx(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                     RHS(i + p, i + q) += N(p, gausspoint(j)) * N(q, gausspoint(j)) * gaussweight * detJ / dt;
-                    LHS(i + p, i + q) -= c * N(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
+                    LHS(i + p, i + q) -= c * (1. - alpha) * N(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                     RHS(i + p, i + q) -= kappa * (1. - alpha) * dNdx(p, gausspoint(j)) * dNdx(q, gausspoint(j)) * gaussweight * detJ;
                 }
             }
